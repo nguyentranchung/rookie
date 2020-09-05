@@ -128,7 +128,7 @@ class Field
                 if ($value->isEmpty()) {
                     return '—';
                 }
-                return $value->reduce(function ($html, $value) {
+                return $value->reduce(function ($html, Model $value) {
                     return $html.html()
                             ->a(
                                 route('admin.resources.edit', [
