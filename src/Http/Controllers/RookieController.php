@@ -8,6 +8,6 @@ class RookieController extends Controller
 {
     public function index($rookieName)
     {
-        return view('rookie::index');
+        return view(config('rookie.view'));
     }
 }

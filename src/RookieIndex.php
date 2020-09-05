@@ -33,6 +33,6 @@ class RookieIndex extends Component
 
     public function render()
     {
-        return view(config('rookie.view'));
+        return view('rookie::rookie-index');
     }
 }

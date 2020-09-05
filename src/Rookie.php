@@ -23,13 +23,6 @@ class Rookie
         return [];
     }
 
-    public function index()
-    {
-        return view('rookie::index', [
-            'rookie' => $this,
-        ]);
-    }
-
     public function models()
     {
         if (isset($this->models)) {
@@ -65,11 +58,6 @@ class Rookie
             ->paginate();
 
         return $this->models;
-    }
-
-    public function render()
-    {
-        return view(config('rookie.view'));
     }
 
     /**
