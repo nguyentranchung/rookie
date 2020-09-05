@@ -7,7 +7,7 @@
  */
 $rookie = $this->rookie;
 ?>
-<div class="card mt-5">
+<div class="card">
     <div class="card-body">
         <div>
 
