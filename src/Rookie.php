@@ -14,6 +14,7 @@ class Rookie
     protected string $modelClass;
     protected string $title;
     protected $models;
+    protected $defaultSort = '-id';
 
     /**
      * @return array
@@ -69,6 +70,7 @@ class Rookie
             ->when($count->isNotEmpty(), fn(Builder $q) => $q->withCount($count->all()))
             ->allowedFilters($filter)
             ->allowedSorts($sort)
+            ->defaultSort($this->defaultSort)
             ->paginate();
 
         return $this->models;
