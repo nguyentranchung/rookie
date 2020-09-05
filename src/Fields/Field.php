@@ -135,7 +135,6 @@ class Field
                                     'resourceName' => 'xxx',
                                     'resourceId' => $value->getKey(),
                                 ]),
-                                'xxxx'.
                                 $value->getAttribute($this->rookie->getTitle())
                             )
                             ->class('badge badge-secondary mr-1');
