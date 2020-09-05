@@ -54,5 +54,9 @@ $rookie = $this->rookie;
                 </tr>
             @endforeach
         </table>
+
+        <div class="table-responsive d-flex justify-content-center">
+            {{ $rookie->models()->links() }}
+        </div>
     </div>
 </div>
