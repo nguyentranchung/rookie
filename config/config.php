@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'view' => 'rookie::rookie-index',
+    'view' => 'rookie::index',
     'route' => [
         'prefix' => 'rookies',
         'middleware' => ['web'],
