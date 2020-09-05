@@ -26,7 +26,7 @@ class RookieIndex extends Component
     public function getRookieProperty()
     {
         $rookies = collect(config('rookie.rookies'));
-        $rookie = $rookies->firstOrFail(fn($value) => $value === $this->name);
+        $rookie = $rookies->filter(fn($value, $key) => $key === $this->name)->firstOrFail();
 
         return new $rookie;
     }

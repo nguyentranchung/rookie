@@ -13,7 +13,7 @@
 </head>
 <body>
 <div class="container">
-    @livewire('rookie-index', ['name' => 'users'])
+    @livewire('rookie-index', ['name' => $rookieName])
 </div>
 @livewireScripts
 </body>
