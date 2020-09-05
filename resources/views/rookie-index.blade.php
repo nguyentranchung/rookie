@@ -34,7 +34,7 @@ $rookie = $this->rookie;
             </tr>
             </thead>
             @foreach($rookie->models() as $model)
-                @if($loop->first)
+                @if($rookie->filterableFields()->isNotEmpty() && $loop->first)
                     <tr>
                         @foreach($rookie->fields() as $field)
                             @if($field->isFilterable())
