@@ -23,29 +23,43 @@ class Rookie
         return [];
     }
 
+    public function relationFields()
+    {
+        return \collect($this->fields())->filter(fn(Field $field) => $field instanceof Relation);
+    }
+
+    public function normalFields()
+    {
+        return \collect($this->fields())->filter(fn(Field $field) => !$field instanceof Relation);
+    }
+
+    public function filterableFields()
+    {
+        return \collect($this->fields())->filter(fn(Field $field) => !$field instanceof Relation && $field->isSortable());
+    }
+
     public function models()
     {
         if (isset($this->models)) {
             return $this->models;
         }
 
-        $with = \collect($this->fields())
-            ->filter(fn(Field $field) => $field instanceof Relation && !$field->isShowCountOnly())
+        $with = $this->relationFields()
+            ->filter(fn(Relation $field) => !$field->isShowCountOnly())
             ->keyBy(fn(Relation $field) => $field->getAttribute())
             ->keys();
 
-        $count = \collect($this->fields())
-            ->filter(fn(Field $field) => $field instanceof Relation && $field->isShowCountOnly())
+        $count = $this->relationFields()
+            ->filter(fn(Relation $field) => $field->isShowCountOnly())
             ->keyBy(fn(Relation $field) => $field->getAttribute())
             ->keys();
 
-        $filter = \collect($this->fields())
-            ->filter(fn(Field $field) => $field->isFilterable())
+        $filter = $this->filterableFields()
             ->map(fn(Field $field) => $field->getFilter())
             ->all();
 
-        $sort = \collect($this->fields())
-            ->filter(fn(Field $field) => !$field instanceof Relation && $field->isSortable())
+        $sort = $this->normalFields()
+            ->filter(fn(Field $field) => $field->isSortable())
             ->keyBy(fn(Field $field) => $field->getAttribute())
             ->keys()
             ->all();
