@@ -11,10 +11,12 @@ $rookie = $this->rookie;
     <div class="card-body">
         <div>
 
-            <div class="form-group">
-                <label class="sr-only" for="filter">Search</label>
-                <input wire:keydown.enter="filter" class="form-control" wire:model="filter.name" type="text">
-            </div>
+            @if($rookie->filterableFields()->isNotEmpty())
+                <div class="form-group">
+                    <label class="sr-only" for="filter">Search</label>
+                    <input wire:keydown.enter="filter" class="form-control" wire:model="filter.name" type="text">
+                </div>
+            @endif
 
             <div class="form-group">
                 <button type="submit" class="btn btn-primary" wire:click="filter">Search</button>
