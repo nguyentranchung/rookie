@@ -10,7 +10,6 @@ $rookie = $this->rookie;
 <div class="card">
     <div class="card-body">
         <div>
-
             @if($rookie->filterableFields()->isNotEmpty())
                 <div class="form-group">
                     <label class="sr-only" for="filter">Search</label>
@@ -37,7 +36,7 @@ $rookie = $this->rookie;
             </thead>
             @foreach($rookie->models() as $model)
                 @if($rookie->filterableFields()->isNotEmpty() && $loop->first)
-                    <tr>
+                    <tr style="color: inherit; background: inherit;">
                         @foreach($rookie->fields() as $field)
                             @if($field->isFilterable())
                                 <td>
