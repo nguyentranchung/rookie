@@ -23,7 +23,7 @@ $rookie = $this->rookie;
             </div>
         </div>
 
-        <div>
+        <div class="table-responsive d-flex justify-content-center">
             {{ $rookie->models()->links() }}
         </div>
 
