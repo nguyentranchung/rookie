@@ -39,6 +39,9 @@ class Rookie
         return \collect($this->fields())->filter(fn(Field $field) => !$field instanceof Relation && $field->isSortable());
     }
 
+    /**
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator | \Illuminate\Pagination\LengthAwarePaginator
+     */
     public function models()
     {
         if (isset($this->models)) {
@@ -71,7 +74,7 @@ class Rookie
             ->allowedFilters($filter)
             ->allowedSorts($sort)
             ->defaultSort($this->defaultSort)
-            ->paginate();
+            ->paginate(10);
 
         return $this->models;
     }
