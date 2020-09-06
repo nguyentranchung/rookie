@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use Spatie\QueryBuilder\AllowedFilter;
 
 class Field
 {
@@ -86,7 +87,7 @@ class Field
      */
     public function filter($filter = null)
     {
-        $this->filter = $filter ?: $this->attribute;
+        $this->filter = $filter ?: AllowedFilter::partial($this->attribute)->ignore(null);
 
         return $this;
     }
