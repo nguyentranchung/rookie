@@ -8,19 +8,43 @@
 $rookie = $this->rookie;
 ?>
 <div class="card">
-    <div class="card-body">
-        <div>
-            @if($rookie->filterableFields()->isNotEmpty())
-                <div class="form-group">
-                    <label class="sr-only" for="filter">Search</label>
-                    <input wire:keydown.enter="filter" class="form-control" wire:model="filter.name" type="text">
-                </div>
-            @endif
+    <div class="card-header">
+        <div class="row">
+            <div class="col-6">
+                <h3 class="card-title">
+                    <a href="#" class="btn btn-sm btn-outline-info">Add New</a>
+                </h3>
+            </div>
 
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary" wire:click="filter">Search</button>
+            <div class="col-6 text-right">
+                <div class="d-inline-flex dropdown">
+                    <button class="btn btn-sm btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false"> Filters
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right keep-open p-3" aria-labelledby="dropdownMenuButton">
+                        <div class="text-left mb-4">
+                            <label class="block">
+                                Active
+                            </label>
+                            <div class="inline-block relative w-full">
+                                <select class="form-control" wire:model="filters1" name="filters[]">
+                                    <option value="">
+                                        --
+                                    </option>
+                                </select>
+
+
+                                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                    <i data-feather="chevron-down" class="w-4 h-4"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+    </div>
+    <div class="card-body">
 
         <div class="table-responsive d-flex justify-content-center">
             {{ $rookie->models()->withQueryString()->onEachSide(5)->links() }}
