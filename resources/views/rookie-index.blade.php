@@ -34,6 +34,8 @@ $rookie = $this->rookie;
                 @endforeach
             </tr>
             </thead>
+
+            <tbody>
             @foreach($rookie->models() as $model)
                 @if($rookie->filterableFields()->isNotEmpty() && $loop->first)
                     <tr style="color: inherit; background: inherit;">
@@ -54,6 +56,7 @@ $rookie = $this->rookie;
                     @endforeach
                 </tr>
             @endforeach
+            </tbody>
         </table>
 
         <div class="table-responsive d-flex justify-content-center">
