@@ -34,7 +34,7 @@ class Rookie
         return \collect($this->fields())->filter(fn(Field $field) => !$field instanceof Relation);
     }
 
-    public function filterableFields()
+    public function searchableFields()
     {
         return \collect($this->fields())->filter(fn(Field $field) => !$field instanceof Relation && $field->isSortable());
     }
@@ -58,8 +58,8 @@ class Rookie
             ->keyBy(fn(Relation $field) => $field->getAttribute())
             ->keys();
 
-        $filter = $this->filterableFields()
-            ->map(fn(Field $field) => $field->getFilter())
+        $search = $this->searchableFields()
+            ->map(fn(Field $field) => $field->getSearch())
             ->all();
 
         $sort = $this->normalFields()
@@ -71,7 +71,7 @@ class Rookie
         $this->models = QueryBuilder::for($this->modelClass)
             ->when($with->isNotEmpty(), fn(Builder $q) => $q->with($with->all()))
             ->when($count->isNotEmpty(), fn(Builder $q) => $q->withCount($count->all()))
-            ->allowedFilters($filter)
+            ->allowedFilters($search)
             ->allowedSorts($sort)
             ->defaultSort($this->defaultSort)
             ->paginate(10);

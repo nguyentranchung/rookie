@@ -18,7 +18,7 @@ class Field
     /**
      * @see https://spatie.be/docs/laravel-query-builder/v2/features/filtering
      */
-    protected $filter = null;
+    protected $search = null;
     protected bool $sortable = false;
 
     public function __construct($attribute)
@@ -69,25 +69,25 @@ class Field
      */
     public function isFilterable(): bool
     {
-        return !!$this->filter;
+        return !!$this->search;
     }
 
     /**
      * @return mixed
      */
-    public function getFilter()
+    public function getSearch()
     {
-        return $this->filter;
+        return $this->search;
     }
 
     /**
-     * @param  null  $filter
+     * @param  null  $search
      *
      * @return \NguyenTranChung\Rookie\Fields\Field
      */
-    public function filter($filter = null)
+    public function search($search = null)
     {
-        $this->filter = $filter ?: AllowedFilter::partial($this->attribute)->ignore(null);
+        $this->search = $search ?: AllowedFilter::partial($this->attribute)->ignore(null);
 
         return $this;
     }

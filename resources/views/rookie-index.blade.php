@@ -47,7 +47,7 @@ $rookie = $this->rookie;
             </thead>
 
             <tbody>
-            @if($rookie->filterableFields()->isNotEmpty())
+            @if($rookie->searchableFields()->isNotEmpty())
                 <tr style="color: inherit; background: inherit;">
                     @foreach($rookie->fields() as $field)
                         <td>
