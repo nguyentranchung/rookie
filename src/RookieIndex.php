@@ -19,18 +19,18 @@ class RookieIndex extends Component
     public function mount($name)
     {
         $this->name = $name;
-        $this->filter = request()->query('filter', null);
+        $this->filter = request()->query('filter', $this->filter);
     }
 
-    public function filter()
+    public function updatingFilter()
     {
-        request()->query->add([
-            'filter' => $this->filter,
-        ]);
+        $this->page = 1;
     }
 
     public function getRookieProperty()
     {
+        request()->query->set('filter', $this->filter);
+
         $rookies = collect(config('rookie.rookies'));
         $rookie = $rookies->filter(fn($value, $key) => $key === $this->name)->firstOrFail();
 
