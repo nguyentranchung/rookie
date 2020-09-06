@@ -5,15 +5,21 @@ namespace NguyenTranChung\Rookie;
 
 
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class RookieIndex extends Component
 {
+    use WithPagination;
+
     public string $name;
     public $filter;
+
+    protected $updatesQueryString = ['filter'];
 
     public function mount($name)
     {
         $this->name = $name;
+        $this->filter = request()->query('filter', null);
     }
 
     public function filter()
