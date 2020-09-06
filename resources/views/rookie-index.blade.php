@@ -37,7 +37,7 @@ $rookie = $this->rookie;
             {{ $rookie->models()->withQueryString()->onEachSide(5)->links() }}
         </div>
 
-        <table class="table table-hover">
+        <table class="table table-hover table-responsive">
             <thead>
             <tr>
                 @foreach($rookie->fields() as $field)
