@@ -39,20 +39,19 @@ $rookie = $this->rookie;
             @if($rookie->filterableFields()->isNotEmpty())
                 <tr style="color: inherit; background: inherit;">
                     @foreach($rookie->fields() as $field)
-                        @if($field->isFilterable())
-                            <td>
+                        <td>
+                            @if($field->isFilterable())
                                 <div class="btn-group w-100">
                                     <input id="{{ 'filter-'.$field->getAttribute() }}" wire:keydown.enter="filter" class="form-control"
-                                           wire:model.debounce.500ms="filter.{{ $field->getAttribute() }}" type="text">
-                                    @if(isset($this->filter) && Arr::has($this->filter, $field->getAttribute()))
-                                        <span id="input-clear" class="far fa-times-circle"
-                                              onclick="document.getElementById('{{ 'filter-'.$field->getAttribute() }}').value=''"></span>
+                                           wire:model="filter.{{ $field->getAttribute() }}" type="text">
+                                    @if(isset($this->filter) && Arr::has($this->filter, $field->getAttribute()) && filled($this->filter[$field->getAttribute()]))
+                                        <div wire:model="filter.{{ $field->getAttribute() }}">
+                                            <span id="input-clear" class="far fa-times-circle" x-data @click="$dispatch('input', null)"></span>
+                                        </div>
                                     @endif
                                 </div>
-                            </td>
-                        @else
-                            <td></td>
-                        @endif
+                            @endif
+                        </td>
                     @endforeach
                 </tr>
             @endif
