@@ -11,9 +11,7 @@ $rookie = $this->rookie;
     <div class="card-header">
         <div class="row">
             <div class="col-6">
-                <h3 class="card-title">
-                    <a href="#" class="btn btn-sm btn-outline-info">Add New</a>
-                </h3>
+                <a href="#" class="btn btn-sm btn-outline-info">Add New </a>
             </div>
 
             <div class="col-6 text-right">
