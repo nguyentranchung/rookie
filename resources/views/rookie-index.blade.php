@@ -20,22 +20,11 @@ $rookie = $this->rookie;
                             aria-expanded="false"> Filters
                     </button>
                     <div class="dropdown-menu dropdown-menu-right keep-open p-3" aria-labelledby="dropdownMenuButton">
-                        <div class="text-left mb-4">
-                            <label class="block">
-                                Active
-                            </label>
-                            <div class="inline-block relative w-full">
-                                <select class="form-control" wire:model="filters1" name="filters[]">
-                                    <option value="">
-                                        --
-                                    </option>
-                                </select>
-
-
-                                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                                    <i data-feather="chevron-down" class="w-4 h-4"></i>
-                                </div>
-                            </div>
+                        <label class="d-block">Active</label>
+                        <div class="d-block">
+                            <select class="custom-select" wire:model="filters" name="filters[]">
+                                <option value="">--</option>
+                            </select>
                         </div>
                     </div>
                 </div>
