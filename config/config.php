@@ -1,7 +1,10 @@
 <?php
 
 return [
-    'view' => 'rookie::index',
+    'view' => [
+        'layout' => 'rookie::layout',
+        'section' => 'content',
+    ],
     'route' => [
         'prefix' => 'rookies',
         'middleware' => ['web'],

@@ -27,7 +27,7 @@
 <body>
 
 <div class="container pt-4">
-    @yield('content')
+    @yield(config('rookie.view.section', 'content'))
 </div>
 
 @livewireScripts

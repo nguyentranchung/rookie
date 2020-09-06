@@ -11,7 +11,7 @@ $rookie = $this->rookie;
     <div class="card-header">
         <div class="row">
             <div class="col-6">
-                <a href="#" class="btn btn-sm btn-outline-info">Add New </a>
+                <a href="{{ route('rookie.create', $this->name) }}" class="btn btn-sm btn-outline-info">Add New </a>
             </div>
 
             <div class="col-6 text-right">
