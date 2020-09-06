@@ -31,8 +31,8 @@ $rookie = $this->rookie;
             </div>
         </div>
     </div>
-    <div class="card-body">
 
+    <div class="card-body">
         <div class="table-responsive d-flex justify-content-center">
             {{ $rookie->models()->withQueryString()->onEachSide(5)->links() }}
         </div>
