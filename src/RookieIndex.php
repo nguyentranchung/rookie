@@ -12,24 +12,24 @@ class RookieIndex extends Component
     use WithPagination;
 
     public string $name;
-    public $filter;
+    public $search;
 
-    protected $updatesQueryString = ['filter'];
+    protected $updatesQueryString = ['search'];
 
     public function mount($name)
     {
         $this->name = $name;
-        $this->filter = request()->query('filter', $this->filter);
+        $this->search = request()->query('filter', $this->search);
     }
 
-    public function updatingFilter()
+    public function updatingSearch()
     {
         $this->page = 1;
     }
 
     public function getRookieProperty()
     {
-        request()->query->set('filter', $this->filter);
+        request()->query->set('filter', $this->search);
 
         $rookies = collect(config('rookie.rookies'));
         $rookie = $rookies->filter(fn($value, $key) => $key === $this->name)->firstOrFail();

@@ -19,11 +19,11 @@ $rookie = $this->rookie;
                     <button class="btn btn-sm btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false"> Filters
                     </button>
-                    <div class="dropdown-menu dropdown-menu-right keep-open p-3" aria-labelledby="dropdownMenuButton">
+                    <div class="dropdown-menu dropdown-menu-right keep-open p-3" aria-labelledby="dropdownMenuButton" style="min-width: 15rem">
                         <label class="d-block">Active</label>
                         <div class="d-block">
                             <select class="custom-select" wire:model="filters" name="filters[]">
-                                <option value="">--</option>
+                                <option value="">--- ---</option>
                             </select>
                         </div>
                     </div>
@@ -53,10 +53,10 @@ $rookie = $this->rookie;
                         <td>
                             @if($field->isFilterable())
                                 <div class="btn-group w-100">
-                                    <input id="{{ 'filter-'.$field->getAttribute() }}" wire:keydown.enter="filter" class="form-control"
-                                           wire:model="filter.{{ $field->getAttribute() }}" type="text">
-                                    @if(isset($this->filter) && Arr::has($this->filter, $field->getAttribute()) && filled($this->filter[$field->getAttribute()]))
-                                        <div wire:model="filter.{{ $field->getAttribute() }}">
+                                    <input id="{{ 'search-'.$field->getAttribute() }}" class="form-control"
+                                           wire:model.debounce.500ms="search.{{ $field->getAttribute() }}" type="text">
+                                    @if(isset($this->search) && Arr::has($this->search, $field->getAttribute()) && filled($this->search[$field->getAttribute()]))
+                                        <div wire:model="search.{{ $field->getAttribute() }}">
                                             <span id="input-clear" class="far fa-times-circle" x-data @click="$dispatch('input', null)"></span>
                                         </div>
                                     @endif
