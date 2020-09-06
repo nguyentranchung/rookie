@@ -25,7 +25,7 @@
     @livewireStyles
 </head>
 <body>
-<div class="container">
+<div class="container pt-4">
     @livewire('rookie-index', ['name' => $rookieName])
 </div>
 @livewireScripts
