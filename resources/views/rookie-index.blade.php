@@ -36,20 +36,27 @@ $rookie = $this->rookie;
             </thead>
 
             <tbody>
+            @if($rookie->filterableFields()->isNotEmpty())
+                <tr style="color: inherit; background: inherit;">
+                    @foreach($rookie->fields() as $field)
+                        @if($field->isFilterable())
+                            <td>
+                                <div class="btn-group w-100">
+                                    <input id="{{ 'filter-'.$field->getAttribute() }}" wire:keydown.enter="filter" class="form-control"
+                                           wire:model.debounce.500ms="filter.{{ $field->getAttribute() }}" type="text">
+                                    @if(isset($this->filter) && Arr::has($this->filter, $field->getAttribute()))
+                                        <span id="input-clear" class="far fa-times-circle"
+                                              onclick="document.getElementById('{{ 'filter-'.$field->getAttribute() }}').value=''"></span>
+                                    @endif
+                                </div>
+                            </td>
+                        @else
+                            <td></td>
+                        @endif
+                    @endforeach
+                </tr>
+            @endif
             @foreach($rookie->models() as $model)
-                @if($rookie->filterableFields()->isNotEmpty() && $loop->first)
-                    <tr style="color: inherit; background: inherit;">
-                        @foreach($rookie->fields() as $field)
-                            @if($field->isFilterable())
-                                <td>
-                                    <input wire:keydown.enter="filter" class="form-control" wire:model="filter.{{ $field->getAttribute() }}" type="text">
-                                </td>
-                            @else
-                                <td></td>
-                            @endif
-                        @endforeach
-                    </tr>
-                @endif
                 <tr>
                     @foreach($rookie->fields() as $field)
                         <td>{!! $field->getValue($model) !!}</td>
