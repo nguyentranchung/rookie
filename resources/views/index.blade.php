@@ -25,10 +25,28 @@
     @livewireStyles
 </head>
 <body>
+
 <div class="container pt-4">
     @livewire('rookie-index', ['name' => $rookieName])
 </div>
+
 @livewireScripts
-<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.6.0/dist/alpine.min.js" defer></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha512-M5KW3ztuIICmVIhjSqXe01oV2bpe248gOxqmlcYrEzAvws7Pw3z6BK0iGbrwvdrUQUhi3eXgtxp5I8PDo9YfjQ==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+        integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/2.6.0/alpine.js"
+        integrity="sha512-f1s2tx564OL4dSUFbTb9EE9skCfMIYl11V3CbDoM/cQN5UcMUsAacoekIExvl89ZW5oalPL5UPKs4x71XNSq0g==" crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+    // waiting for DOM loaded
+    document.addEventListener('DOMContentLoaded', function() {
+        // listen for the event
+        window.livewire.on('test', param => {
+            console.log('test', JSON.stringify(param));
+        });
+    });
+</script>
 </body>
 </html>
