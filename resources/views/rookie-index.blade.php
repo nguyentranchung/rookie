@@ -23,7 +23,7 @@ $rookie = $this->rookie;
         </div>
 
         <div class="table-responsive d-flex justify-content-center">
-            {{ $rookie->models()->links() }}
+            {{ $rookie->models()->withQueryString()->onEachSide(5)->links() }}
         </div>
 
         <table class="table table-hover">
@@ -57,7 +57,7 @@ $rookie = $this->rookie;
         </table>
 
         <div class="table-responsive d-flex justify-content-center">
-            {{ $rookie->models()->links() }}
+            {{ $rookie->models()->withQueryString()->onEachSide(5)->links() }}
         </div>
     </div>
 </div>
