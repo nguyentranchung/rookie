@@ -5,6 +5,7 @@ namespace NguyenTranChung\Rookie;
 
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
 use NguyenTranChung\Rookie\Fields\Field;
 use NguyenTranChung\Rookie\Fields\Relation;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -37,6 +38,11 @@ class Rookie
     public function searchableFields()
     {
         return \collect($this->fields())->filter(fn(Field $field) => !$field instanceof Relation && $field->isSortable());
+    }
+
+    public function forms()
+    {
+        //
     }
 
     /**
@@ -86,4 +92,20 @@ class Rookie
     {
         return $this->title;
     }
+
+    public function store(Request $request)
+    {
+        //
+    }
+
+    public function update(Request $request)
+    {
+        //
+    }
+
+    public function delete(Request $request)
+    {
+        //
+    }
+
 }
