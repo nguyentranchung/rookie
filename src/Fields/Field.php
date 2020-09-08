@@ -67,7 +67,7 @@ class Field
     /**
      * @return bool
      */
-    public function isFilterable(): bool
+    public function isSearchable(): bool
     {
         return !!$this->search;
     }
@@ -78,6 +78,14 @@ class Field
     public function getSearch()
     {
         return $this->search;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSearchKey()
+    {
+        return $this->search instanceof AllowedFilter ? $this->search->getName() : $this->search;
     }
 
     /**
@@ -142,18 +150,18 @@ class Field
                 }, '');
             }
         } catch (Exception $exception) {
-            dd($value);
+            dump($value);
         }
 
         return $value ?: '—';
     }
 
     /**
-     * @param  mixed  $value
+     * @param  callable | string  $value
      *
      * @return \NguyenTranChung\Rookie\Fields\Field
      */
-    public function setValue(callable $value)
+    public function setValue($value)
     {
         $this->value = $value;
 

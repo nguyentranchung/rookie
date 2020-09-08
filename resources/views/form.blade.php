@@ -15,7 +15,9 @@
         :options="$form->options"
         :multiple="$form->multiple"
         :placeholder="$form->placeholder"
-        :language="$form->language"></x-form-select>
+        :language="$form->language">
+        @include('rookie::help-text')
+    </x-form-select>
     @break
 
     @case('textarea')
@@ -26,7 +28,9 @@
         :name="$form->name"
         :value="$form->value"
         :placeholder="$form->placeholder"
-        :language="$form->language"></x-form-textarea>
+        :language="$form->language">
+        @include('rookie::help-text')
+    </x-form-textarea>
     @break
 
     @case('radio')
@@ -69,5 +73,7 @@
         :value="$form->value"
         :default="$form->default"
         :placeholder="$form->placeholder"
-        :language="$form->language"></x-form-input>
+        :language="$form->language">
+        @include('rookie::help-text')
+    </x-form-input>
 @endswitch

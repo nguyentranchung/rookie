@@ -22,7 +22,7 @@ class RookieController extends Controller
     public function store(Request $request, $rookieName)
     {
         $rookie = $this->findRookie($rookieName);
-        return $rookie->store($request);
+        return $rookie->store($request, $rookieName);
     }
 
     protected function findRookie($rookieName)

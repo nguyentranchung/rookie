@@ -14,6 +14,8 @@ abstract class Form
     public string $placeholder = '';
     public string $id = '';
     public string $class = '';
+    public string $position = 'left';
+    public ?string $helpText = null;
 
     public $value;
     public $default;
@@ -80,14 +82,21 @@ abstract class Form
 
     public function positionRight()
     {
-        $this->attributes->offsetSet('position', 'right');
+        $this->position = 'right';
+
+        return $this;
+    }
+
+    public function helpText(?string $help)
+    {
+        $this->helpText = $help;
 
         return $this;
     }
 
     public function isPositionLeft()
     {
-        return $this->attributes->get('position', 'left') === 'left';
+        return $this->position === 'left';
     }
 
     public function isPositionRight()

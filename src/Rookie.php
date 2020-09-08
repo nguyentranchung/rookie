@@ -10,12 +10,18 @@ use NguyenTranChung\Rookie\Fields\Field;
 use NguyenTranChung\Rookie\Fields\Relation;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class Rookie
+abstract class Rookie
 {
     protected string $modelClass;
     protected string $title;
     protected $models;
     protected $defaultSort = '-id';
+    protected int $paginate = 10;
+
+    public function query(): Builder
+    {
+        return $this->modelClass::query();
+    }
 
     /**
      * @return array
@@ -37,13 +43,10 @@ class Rookie
 
     public function searchableFields()
     {
-        return \collect($this->fields())->filter(fn(Field $field) => !$field instanceof Relation && $field->isSortable());
+        return \collect($this->fields())->filter(fn(Field $field) => !$field instanceof Relation && $field->isSearchable());
     }
 
-    public function forms()
-    {
-        //
-    }
+    abstract public function forms();
 
     /**
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator | \Illuminate\Pagination\LengthAwarePaginator
@@ -64,9 +67,7 @@ class Rookie
             ->keyBy(fn(Relation $field) => $field->getAttribute())
             ->keys();
 
-        $search = $this->searchableFields()
-            ->map(fn(Field $field) => $field->getSearch())
-            ->all();
+        $search = $this->searchableFields()->map(fn(Field $field) => $field->getSearch())->all();
 
         $sort = $this->normalFields()
             ->filter(fn(Field $field) => $field->isSortable())
@@ -74,13 +75,19 @@ class Rookie
             ->keys()
             ->all();
 
-        $this->models = QueryBuilder::for($this->modelClass)
+        $query = QueryBuilder::for($this->query())
             ->when($with->isNotEmpty(), fn(Builder $q) => $q->with($with->all()))
             ->when($count->isNotEmpty(), fn(Builder $q) => $q->withCount($count->all()))
             ->allowedFilters($search)
             ->allowedSorts($sort)
-            ->defaultSort($this->defaultSort)
-            ->paginate(10);
+            ->defaultSort($this->defaultSort);
+
+        if ($this->paginate === 0) {
+            $models = $query->get();
+            $this->models = $models->toFlatTree()->paginate($models->count());
+        } else {
+            $this->models = $query->paginate($this->paginate);
+        }
 
         return $this->models;
     }
@@ -93,19 +100,10 @@ class Rookie
         return $this->title;
     }
 
-    public function store(Request $request)
-    {
-        //
-    }
+    abstract public function store(Request $request, $rookieName);
 
-    public function update(Request $request)
-    {
-        //
-    }
+    // abstract public function update(Request $request);
 
-    public function delete(Request $request)
-    {
-        //
-    }
+    // abstract public function delete(Request $request);
 
 }

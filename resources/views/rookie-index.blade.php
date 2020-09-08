@@ -37,44 +37,59 @@ $rookie = $this->rookie;
             {{ $rookie->models()->withQueryString()->onEachSide(5)->links() }}
         </div>
 
-        <table class="table table-hover table-responsive">
-            <thead>
-            <tr>
-                @foreach($rookie->fields() as $field)
-                    <th>{!! $field->getHeader() !!}</th>
-                @endforeach
-            </tr>
-            </thead>
-
-            <tbody>
-            @if($rookie->searchableFields()->isNotEmpty())
-                <tr style="color: inherit; background: inherit;">
-                    @foreach($rookie->fields() as $field)
-                        <td>
-                            @if($field->isFilterable())
-                                <div class="btn-group w-100">
-                                    <input id="{{ 'search-'.$field->getAttribute() }}" class="form-control"
-                                           wire:model.debounce.500ms="search.{{ $field->getAttribute() }}" type="text">
-                                    @if(isset($this->search) && Arr::has($this->search, $field->getAttribute()) && filled($this->search[$field->getAttribute()]))
-                                        <div wire:model="search.{{ $field->getAttribute() }}">
-                                            <span id="input-clear" class="far fa-times-circle" x-data @click="$dispatch('input', null)"></span>
-                                        </div>
-                                    @endif
-                                </div>
-                            @endif
-                        </td>
-                    @endforeach
-                </tr>
-            @endif
-            @foreach($rookie->models() as $model)
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
                 <tr>
+                    <th style="width: 10px">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="customCheckAll">
+                            <label class="custom-control-label" for="customCheckAll"></label>
+                        </div>
+                    </th>
                     @foreach($rookie->fields() as $field)
-                        <td>{!! $field->getValue($model) !!}</td>
+                        <th>{!! $field->getHeader() !!}</th>
                     @endforeach
                 </tr>
-            @endforeach
-            </tbody>
-        </table>
+                </thead>
+
+                <tbody>
+                @if($rookie->searchableFields()->isNotEmpty())
+                    <tr style="color: inherit; background: inherit;">
+                        @foreach($rookie->fields() as $field)
+                            <td></td>
+                            <td>
+                                @if($field->isSearchable())
+                                    <div class="btn-group w-100">
+                                        <input id="{{ 'search-'.$field->getAttribute() }}" class="form-control"
+                                               wire:model.debounce.500ms="filter.{{ $field->getSearchKey() }}" type="text">
+                                        @if(isset($this->filter) && Arr::has($this->filter, $field->getSearchKey()) && filled($this->filter[$field->getSearchKey()]))
+                                            <div wire:model="filter.{{ $field->getSearchKey() }}">
+                                                <span id="input-clear" class="far fa-times-circle" x-data @click="$dispatch('input', null)"></span>
+                                            </div>
+                                        @endif
+                                    </div>
+                                @endif
+                            </td>
+                        @endforeach
+                    </tr>
+                @endif
+                @foreach($rookie->models() as $model)
+                    <tr>
+                        <td>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="customCheck{{ $model->getKey() }}">
+                                <label class="custom-control-label" for="customCheck{{ $model->getKey() }}"></label>
+                            </div>
+                        </td>
+                        @foreach($rookie->fields() as $field)
+                            <td>{!! $field->getValue($model) !!}</td>
+                        @endforeach
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+        </div>
 
         <div class="table-responsive d-flex justify-content-center">
             {{ $rookie->models()->withQueryString()->onEachSide(5)->links() }}

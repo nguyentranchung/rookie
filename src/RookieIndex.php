@@ -11,15 +11,16 @@ class RookieIndex extends Component
 {
     use WithPagination;
 
+    protected $paginationTheme = 'bootstrap';
     public string $name;
-    public $search;
+    public $filter;
 
-    protected $updatesQueryString = ['search'];
+    protected $queryString = ['filter'];
 
     public function mount($name)
     {
         $this->name = $name;
-        $this->search = request()->query('filter', $this->search);
+        $this->filter = request()->query('filter', $this->filter);
     }
 
     public function updatingSearch()
@@ -29,7 +30,7 @@ class RookieIndex extends Component
 
     public function getRookieProperty()
     {
-        request()->query->set('filter', $this->search);
+        request()->query->set('filter', $this->filter);
 
         $rookies = collect(config('rookie.rookies'));
         $rookie = $rookies->filter(fn($value, $key) => $key === $this->name)->firstOrFail();
