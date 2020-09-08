@@ -16,6 +16,7 @@ composer require nguyentranchung/rookie
 ```
 
 Publish config
+
 ```bash
 php artisan vendor:publish --provider=NguyenTranChung\Rookie\RookieServiceProvider
 ```
@@ -23,12 +24,13 @@ php artisan vendor:publish --provider=NguyenTranChung\Rookie\RookieServiceProvid
 ## Usage
 
 Tạo files UserRookie.php trong thư mục app\Rookies
-``` php
+
+```php
 <?php
 
 namespace App\Rookies;
 
-use App\User;
+use App\Models\User;
 use NguyenTranChung\Rookie\Fields\Field;
 use NguyenTranChung\Rookie\Fields\HasMany;
 use NguyenTranChung\Rookie\Rookie;
@@ -61,6 +63,7 @@ class UserRookie extends Rookie
 ```
 
 Sau đó thêm vào trong config\rookie.php
+
 ```php
 <?php
 
@@ -76,7 +79,7 @@ Mở trình duyệt truy cập http://localhost:8000/rookies/users
 
 ### Testing
 
-``` bash
+```bash
 composer test
 ```
 
@@ -94,8 +97,8 @@ If you discover any security related issues, please email nguyentranchung52th@gm
 
 ## Credits
 
-- [Nguyen Tran Chung](https://github.com/nguyentranchung)
-- [All Contributors](../../contributors)
+-   [Nguyen Tran Chung](https://github.com/nguyentranchung)
+-   [All Contributors](../../contributors)
 
 ## License
 
