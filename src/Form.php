@@ -16,6 +16,7 @@ abstract class Form
     public string $class = '';
     public string $position = 'left';
     public ?string $helpText = null;
+    public bool $save = true;
 
     public $value;
     public $default;
@@ -31,6 +32,13 @@ abstract class Form
         $this->label = Str::title($name);
         $this->placeholder = Str::title($name);
         $this->id = $name;
+    }
+
+    public function notSave()
+    {
+        $this->save = false;
+
+        return $this;
     }
 
     /**
