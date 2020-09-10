@@ -140,7 +140,27 @@ abstract class Rookie
         return $this->models;
     }
 
-    abstract public function store(Request $request, $rookieName);
+    public function store(Request $request)
+    {
+        /** @var \Illuminate\Database\Eloquent\Model $model */
+        $model = new static::$modelClass;
+        foreach ($this->forms() as $form) {
+            /** @var \NguyenTranChung\Rookie\Form $form */
+            if (!$form->save) {
+                continue;
+            }
+
+            if (!$form->showOnCreation) {
+                continue;
+            }
+
+            $model->setAttribute($form->name, $request->input($form->name));
+        }
+
+        $model->save();
+
+        return redirect()->route('rookie.index', $this::$name);
+    }
 
     abstract public function update(Request $request, $rookieName, $rookieId);
 

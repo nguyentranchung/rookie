@@ -25,7 +25,7 @@ class RookieController extends Controller
     {
         $rookie = Rookie::findOrFail($rookieName);
 
-        return $rookie->store($request, $rookieName);
+        return $rookie->store($request);
     }
 
     public function edit($rookieName, $rookieId)
