@@ -6,13 +6,14 @@
 ?>
 @switch($form->type)
     @case('select')
+    @php($options = $form->options)
     <x-form-select
         :id="$form->id"
         :class="$form->class"
         :label="$form->label"
         :name="$form->name"
         :value="$form->value"
-        :options="$form->options"
+        :options="$options()"
         :multiple="$form->multiple"
         :placeholder="$form->placeholder"
         :language="$form->language">

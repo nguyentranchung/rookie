@@ -23,8 +23,7 @@ abstract class Form
     /**
      * Create a new component instance.
      *
-     * @param $name
-     * @param  string  $type
+     * @param  string  $name
      */
     public function __construct(string $name)
     {

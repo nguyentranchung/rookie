@@ -7,10 +7,10 @@ use NguyenTranChung\Rookie\Form;
 class Select extends Form
 {
     public string $type = 'select';
-    public array $options = [];
+    public $options;
     public bool $multiple = false;
 
-    public function options($options)
+    public function options(callable $options)
     {
         $this->options = $options;
 
