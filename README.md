@@ -28,7 +28,7 @@ Tạo files UserRookie.php trong thư mục app\Rookies
 ```php
 <?php
 
-namespace NguyenTranChung\Admin\Rookies;
+namespace App\Rookies;
 
 use App\Models\User;
 use Illuminate\Http\Request;
