@@ -14,6 +14,7 @@ This is where your description should go. Try and limit it to a paragraph or two
 - [ ] Index view: Chức năng sắp xếp như datatable
 - [ ] Index view: Thêm các bộ lọc như nova
 - [ ] Index view: Thêm các actions như nova
+- [ ] Form: Tự động validate các fields trong forms
 - [ ] Form: Tự động xử lý store
 - [ ] Form: Tự động xử lý update
 - [ ] Form: Tự động xử lý delete
