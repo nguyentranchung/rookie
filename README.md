@@ -16,19 +16,103 @@ composer require nguyentranchung/rookie
 ```
 
 Publish config
+
 ```bash
 php artisan vendor:publish --provider=NguyenTranChung\Rookie\RookieServiceProvider
 ```
 
 ## Usage
 
-``` php
-// Usage description here
+Tạo files UserRookie.php trong thư mục app\Rookies
+
+```php
+<?php
+
+namespace NguyenTranChung\Admin\Rookies;
+
+use App\Models\User;
+use Illuminate\Http\Request;
+use NguyenTranChung\Rookie\Fields\Field;
+use NguyenTranChung\Rookie\Fields\HasMany;
+use NguyenTranChung\Rookie\Fields\MorphTo;
+use NguyenTranChung\Rookie\Forms\Email;
+use NguyenTranChung\Rookie\Forms\Password;
+use NguyenTranChung\Rookie\Forms\Text;
+use NguyenTranChung\Rookie\Rookie;
+
+class UserRookie extends Rookie
+{
+    protected static string $name = 'users';
+    protected static string $modelClass = User::class;
+    protected string $title = 'name';
+
+    /**
+     * @inheritDoc
+     */
+    public function fields()
+    {
+        return [
+            Field::make(User::ID),
+            Field::make(User::NAME)
+                ->search()
+                ->sortable(),
+            Field::make(User::EMAIL)
+                ->search()
+                ->sortable(),
+            MorphTo::make(User::ROLES, RoleRookie::class),
+            MorphTo::make(User::PERMISSIONS, PermissionRookie::class),
+            HasMany::make(User::POSTS, PostRookie::class)
+                ->showCountOnly(),
+            Field::make(User::CREATED_AT)
+                ->setValue(fn(User $model) => $model->created_at->diffForHumans()),
+        ];
+    }
+
+    public function forms()
+    {
+        return [
+            Text::make(User::NAME),
+            Email::make(User::EMAIL),
+            Password::make(User::PASSWORD),
+            Password::make('password_confirmation'),
+        ];
+    }
+
+    public function store(Request $request, $rookieName)
+    {
+        // TODO: Implement store() method.
+    }
+
+    public function update(Request $request, $rookieName, $rookieId)
+    {
+        // TODO: Implement update() method.
+    }
+
+    public function delete(Request $request, $rookieName)
+    {
+        // TODO: Implement delete() method.
+    }
+}
 ```
+
+Sau đó thêm vào trong config\rookie.php
+
+```php
+<?php
+
+return [
+    // ...
+    'rookies' => [
+        App\Rookies\UserRookie::class,
+    ],
+];
+```
+
+Mở trình duyệt truy cập http://localhost:8000/rookies/users
 
 ### Testing
 
-``` bash
+```bash
 composer test
 ```
 
@@ -46,8 +130,8 @@ If you discover any security related issues, please email nguyentranchung52th@gm
 
 ## Credits
 
-- [Nguyen Tran Chung](https://github.com/nguyentranchung)
-- [All Contributors](../../contributors)
+-   [Nguyen Tran Chung](https://github.com/nguyentranchung)
+-   [All Contributors](../../contributors)
 
 ## License
 
