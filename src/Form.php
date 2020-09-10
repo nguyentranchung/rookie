@@ -17,6 +17,8 @@ abstract class Form
     public string $position = 'left';
     public ?string $helpText = null;
     public bool $save = true;
+    public bool $showOnCreation = true;
+    public bool $showOnUpdate = true;
 
     public $value;
     public $default;
@@ -49,6 +51,22 @@ abstract class Form
     public static function make(...$arguments)
     {
         return new static(...$arguments);
+    }
+
+    public function onlyOnCreation()
+    {
+        $this->showOnCreation = true;
+        $this->showOnUpdate = false;
+
+        return $this;
+    }
+
+    public function onlyOnUpdate()
+    {
+        $this->showOnCreation = false;
+        $this->showOnUpdate = true;
+
+        return $this;
     }
 
     public function id($id)
