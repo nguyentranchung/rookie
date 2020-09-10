@@ -7,6 +7,15 @@
 
 This is where your description should go. Try and limit it to a paragraph or two, and maybe throw in a mention of what PSRs you support to avoid any confusion with users and contributors.
 
+## Roadmap
+
+- [ ] Index view: Sắp xếp như datatable
+- [ ] Index view: Thêm các bộ lọc như nova
+- [ ] Index view: Thêm các actions như nova
+- [ ] Form: Tự động xử lý store
+- [ ] Form: Tự động xử lý update
+- [ ] Form: Tự động xử lý delete
+
 ## Installation
 
 You can install the package via composer:
