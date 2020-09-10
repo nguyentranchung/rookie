@@ -36,13 +36,6 @@ abstract class Form
         $this->id = $name;
     }
 
-    public function notSave()
-    {
-        $this->save = false;
-
-        return $this;
-    }
-
     /**
      * @param  array  $arguments
      *
@@ -65,6 +58,13 @@ abstract class Form
     {
         $this->showOnCreation = false;
         $this->showOnUpdate = true;
+
+        return $this;
+    }
+
+    public function notSave()
+    {
+        $this->save = false;
 
         return $this;
     }
@@ -119,13 +119,13 @@ abstract class Form
         return $this;
     }
 
-    public function isPositionLeft()
-    {
-        return $this->position === 'left';
-    }
-
     public function isPositionRight()
     {
         return !$this->isPositionLeft();
+    }
+
+    public function isPositionLeft()
+    {
+        return $this->position === 'left';
     }
 }
