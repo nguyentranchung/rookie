@@ -2,11 +2,9 @@
 
 namespace NguyenTranChung\Rookie\Fields;
 
-use Exception;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use Spatie\QueryBuilder\AllowedFilter;
 
 class Field
 {
@@ -17,7 +15,7 @@ class Field
     /**
      * @see https://spatie.be/docs/laravel-query-builder/v2/features/filtering
      */
-    protected $filter = null;
+    protected $search = null;
     protected bool $sortable = false;
 
     public function __construct($attribute)
@@ -66,27 +64,35 @@ class Field
     /**
      * @return bool
      */
-    public function isFilterable(): bool
+    public function isSearchable(): bool
     {
-        return !!$this->filter;
+        return !!$this->search;
     }
 
     /**
      * @return mixed
      */
-    public function getFilter()
+    public function getSearch()
     {
-        return $this->filter;
+        return $this->search;
     }
 
     /**
-     * @param  null  $filter
+     * @return mixed
+     */
+    public function getSearchKey()
+    {
+        return $this->search instanceof AllowedFilter ? $this->search->getName() : $this->search;
+    }
+
+    /**
+     * @param  null  $search
      *
      * @return \NguyenTranChung\Rookie\Fields\Field
      */
-    public function filter($filter = null)
+    public function search($search = null)
     {
-        $this->filter = $filter ?: $this->attribute;
+        $this->search = $search ?: AllowedFilter::partial($this->attribute)->ignore(null);
 
         return $this;
     }
@@ -114,46 +120,17 @@ class Field
             }
         }
 
-        if ($this instanceof Relation && $this->isShowCountOnly()) {
-            $attribute .= '_count';
-        }
-
         $value = $model->getAttribute($attribute);
-        if ($this instanceof Relation && !$this->isShowCountOnly()) {
-            $value = $value instanceof Model ? collect(Arr::wrap($value)) : $value;
-        }
-
-        try {
-            if ($value instanceof Collection) {
-                if ($value->isEmpty()) {
-                    return '—';
-                }
-                return $value->reduce(function ($html, $value) {
-                    return $html.html()
-                            ->a(
-                                route('admin.resources.edit', [
-                                    'resourceName' => 'xxx',
-                                    'resourceId' => $value->getKey(),
-                                ]),
-                                'xxxx'.
-                                $value->getAttribute($this->rookie->getTitle())
-                            )
-                            ->class('badge badge-secondary mr-1');
-                }, '');
-            }
-        } catch (Exception $exception) {
-            dd($value);
-        }
 
         return $value ?: '—';
     }
 
     /**
-     * @param  mixed  $value
+     * @param  callable | string  $value
      *
      * @return \NguyenTranChung\Rookie\Fields\Field
      */
-    public function setValue(callable $value)
+    public function setValue($value)
     {
         $this->value = $value;
 

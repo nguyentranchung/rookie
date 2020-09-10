@@ -13,6 +13,7 @@ class RookieServiceProvider extends ServiceProvider
     public function boot()
     {
         Livewire::component('rookie-index', RookieIndex::class);
+        Livewire::component('rookie-form', RookieForm::class);
         /*
          * Optional methods to load your package assets
          */

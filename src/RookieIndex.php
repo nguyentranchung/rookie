@@ -5,34 +5,33 @@ namespace NguyenTranChung\Rookie;
 
 
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class RookieIndex extends Component
 {
+    use WithPagination;
+
+    protected $paginationTheme = 'bootstrap';
     public string $name;
-    public $filter;
+    public $search;
+
+    protected $queryString = ['search'];
 
     public function mount($name)
     {
+        $this->search = request()->query('search', $this->search);
         $this->name = $name;
     }
 
-    public function filter()
+    public function updatingSearch()
     {
-        request()->query->add([
-            'filter' => $this->filter,
-        ]);
-    }
-
-    public function getRookieProperty()
-    {
-        $rookies = collect(config('rookie.rookies'));
-        $rookie = $rookies->firstOrFail(fn($value) => $value === $this->name);
-
-        return new $rookie;
+        $this->page = 1;
     }
 
     public function render()
     {
-        return view(config('rookie.view'));
+        request()->query->set('filter', $this->search);
+
+        return view('rookie::rookie-index', ['rookie' => Rookie::findOrFail($this->name)]);
     }
 }
