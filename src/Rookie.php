@@ -12,15 +12,63 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 abstract class Rookie
 {
-    protected string $modelClass;
+    protected static string $name;
+    protected static string $modelClass;
     protected string $title;
     protected $models;
     protected $defaultSort = '-id';
     protected int $paginate = 10;
 
+    public function __construct()
+    {
+        config()->set('form-components.framework', 'bootstrap-4');
+    }
+
+    /**
+     * @param $rookieName
+     *
+     * @return static | null
+     */
+    public static function find($rookieName)
+    {
+        $rookies = collect(config('rookie.rookies'));
+        $rookie = $rookies->filter(fn($rookie) => $rookie::getName() === $rookieName)->first();
+
+        return $rookie ? new $rookie : null;
+    }
+
+    public static function findByModelClass($class)
+    {
+        $rookies = collect(config('rookie.rookies'));
+        $rookie = $rookies->filter(fn($rookie) => $rookie::getModelClass() === $class)->first();
+
+        return $rookie ? new $rookie : null;
+    }
+
+    /**
+     * @param $rookieName
+     *
+     * @return static
+     */
+    public static function findOrFail($rookieName)
+    {
+        $rookie = static::find($rookieName);
+        abort_unless((bool) $rookie, 404);
+
+        return $rookie;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getModelClass(): string
+    {
+        return static::$modelClass;
+    }
+
     public function query(): Builder
     {
-        return $this->modelClass::query();
+        return static::$modelClass::query();
     }
 
     /**
@@ -92,6 +140,12 @@ abstract class Rookie
         return $this->models;
     }
 
+    abstract public function store(Request $request, $rookieName);
+
+    abstract public function update(Request $request, $rookieName, $rookieId);
+
+    abstract public function delete(Request $request, $rookieName);
+
     /**
      * @return string
      */
@@ -100,10 +154,12 @@ abstract class Rookie
         return $this->title;
     }
 
-    abstract public function store(Request $request, $rookieName);
-
-    // abstract public function update(Request $request);
-
-    // abstract public function delete(Request $request);
+    /**
+     * @return string
+     */
+    public static function getName(): string
+    {
+        return static::$name;
+    }
 
 }

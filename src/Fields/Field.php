@@ -2,10 +2,7 @@
 
 namespace NguyenTranChung\Rookie\Fields;
 
-use Exception;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Spatie\QueryBuilder\AllowedFilter;
 
@@ -123,35 +120,7 @@ class Field
             }
         }
 
-        if ($this instanceof Relation && $this->isShowCountOnly()) {
-            $attribute .= '_count';
-        }
-
         $value = $model->getAttribute($attribute);
-        if ($this instanceof Relation && !$this->isShowCountOnly()) {
-            $value = $value instanceof Model ? collect(Arr::wrap($value)) : $value;
-        }
-
-        try {
-            if ($value instanceof Collection) {
-                if ($value->isEmpty()) {
-                    return '—';
-                }
-                return $value->reduce(function ($html, Model $value) {
-                    return $html.html()
-                            ->a(
-                                route('admin.resources.edit', [
-                                    'resourceName' => 'xxx',
-                                    'resourceId' => $value->getKey(),
-                                ]),
-                                $value->getAttribute($this->rookie->getTitle())
-                            )
-                            ->class('badge badge-secondary mr-1');
-                }, '');
-            }
-        } catch (Exception $exception) {
-            dump($value);
-        }
 
         return $value ?: '—';
     }

@@ -5,7 +5,8 @@
  * @var \NguyenTranChung\Rookie\Rookie $rookie
  * @var \Illuminate\Database\Eloquent\Model $model
  */
-$rookie = $this->rookie;
+
+// $rookie = $this->rookie;
 ?>
 <div class="card">
     <div class="card-header">
@@ -56,15 +57,15 @@ $rookie = $this->rookie;
                 <tbody>
                 @if($rookie->searchableFields()->isNotEmpty())
                     <tr style="color: inherit; background: inherit;">
+                        <td></td>
                         @foreach($rookie->fields() as $field)
-                            <td></td>
                             <td>
                                 @if($field->isSearchable())
                                     <div class="btn-group w-100">
                                         <input id="{{ 'search-'.$field->getAttribute() }}" class="form-control"
-                                               wire:model.debounce.500ms="filter.{{ $field->getSearchKey() }}" type="text">
+                                               wire:model.debounce.500ms="search.{{ $field->getSearchKey() }}" type="text">
                                         @if(isset($this->filter) && Arr::has($this->filter, $field->getSearchKey()) && filled($this->filter[$field->getSearchKey()]))
-                                            <div wire:model="filter.{{ $field->getSearchKey() }}">
+                                            <div wire:model="search.{{ $field->getSearchKey() }}">
                                                 <span id="input-clear" class="far fa-times-circle" x-data @click="$dispatch('input', null)"></span>
                                             </div>
                                         @endif
@@ -83,7 +84,20 @@ $rookie = $this->rookie;
                             </div>
                         </td>
                         @foreach($rookie->fields() as $field)
-                            <td>{!! $field->getValue($model) !!}</td>
+                            <td>
+                                @if($rookie->getTitle() === $field->getAttribute())
+                                    <a class="font-weight-bold" href="{{ route('rookie.edit', [$name, $model->getKey()]) }}">
+                                        {!! $field->getValue($model) !!}
+                                    </a>
+                                    <div class="row-actions">
+                                        <a href="#">View</a>&nbsp;|&nbsp;
+                                        <a href="#">Edit</a>&nbsp;|&nbsp;
+                                        <a href="#">Delete</a>&nbsp;|&nbsp;
+                                    </div>
+                                @else
+                                    {!! $field->getValue($model) !!}
+                                @endif
+                            </td>
                         @endforeach
                     </tr>
                 @endforeach

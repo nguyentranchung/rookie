@@ -13,14 +13,14 @@ class RookieIndex extends Component
 
     protected $paginationTheme = 'bootstrap';
     public string $name;
-    public $filter;
+    public $search;
 
-    protected $queryString = ['filter'];
+    protected $queryString = ['search'];
 
     public function mount($name)
     {
+        $this->search = request()->query('search', $this->search);
         $this->name = $name;
-        $this->filter = request()->query('filter', $this->filter);
     }
 
     public function updatingSearch()
@@ -28,18 +28,10 @@ class RookieIndex extends Component
         $this->page = 1;
     }
 
-    public function getRookieProperty()
-    {
-        request()->query->set('filter', $this->filter);
-
-        $rookies = collect(config('rookie.rookies'));
-        $rookie = $rookies->filter(fn($value, $key) => $key === $this->name)->firstOrFail();
-
-        return new $rookie;
-    }
-
     public function render()
     {
-        return view('rookie::rookie-index');
+        request()->query->set('filter', $this->search);
+
+        return view('rookie::rookie-index', ['rookie' => Rookie::findOrFail($this->name)]);
     }
 }

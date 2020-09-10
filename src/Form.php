@@ -75,7 +75,7 @@ abstract class Form
 
     public function language($language)
     {
-        $this->name .= "[{$language}]";
+        $this->language = $language;
 
         return $this;
     }

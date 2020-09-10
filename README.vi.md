@@ -37,7 +37,8 @@ use NguyenTranChung\Rookie\Rookie;
 
 class UserRookie extends Rookie
 {
-    protected string $modelClass = User::class;
+    protected static string $name = 'users';
+    protected static string $modelClass = User::class;
     protected string $title = 'name';
 
     /**
