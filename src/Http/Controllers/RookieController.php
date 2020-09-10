@@ -41,6 +41,6 @@ class RookieController extends Controller
     {
         $rookie = Rookie::findOrFail($rookieName);
 
-        return $rookie->update($request, $rookieName, $rookieId);
+        return $rookie->update($request, $rookieId);
     }
 }

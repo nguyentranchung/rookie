@@ -16,8 +16,8 @@ This is where your description should go. Try and limit it to a paragraph or two
 - [ ] Index view: Thêm các actions như nova
 - [ ] Form: Tự động validate các fields trong forms
 - [x] Form: Tự động xử lý store
-- [ ] Form: Tự động xử lý update
-- [ ] Form: Tự động xử lý delete
+- [x] Form: Tự động xử lý update
+- [x] Form: Tự động xử lý delete
 
 ## Installation
 
@@ -88,21 +88,6 @@ class UserRookie extends Rookie
             Password::make(User::PASSWORD),
             Password::make('password_confirmation'),
         ];
-    }
-
-    public function store(Request $request, $rookieName)
-    {
-        // TODO: Implement store() method.
-    }
-
-    public function update(Request $request, $rookieName, $rookieId)
-    {
-        // TODO: Implement update() method.
-    }
-
-    public function delete(Request $request, $rookieName)
-    {
-        // TODO: Implement delete() method.
     }
 }
 ```

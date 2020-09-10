@@ -10,6 +10,8 @@ use NguyenTranChung\Rookie\Fields\Field;
 use NguyenTranChung\Rookie\Fields\Relation;
 use Spatie\QueryBuilder\QueryBuilder;
 
+use function collect;
+
 abstract class Rookie
 {
     protected static string $name;
@@ -81,17 +83,17 @@ abstract class Rookie
 
     public function relationFields()
     {
-        return \collect($this->fields())->filter(fn(Field $field) => $field instanceof Relation);
+        return collect($this->fields())->filter(fn(Field $field) => $field instanceof Relation);
     }
 
     public function normalFields()
     {
-        return \collect($this->fields())->filter(fn(Field $field) => !$field instanceof Relation);
+        return collect($this->fields())->filter(fn(Field $field) => !$field instanceof Relation);
     }
 
     public function searchableFields()
     {
-        return \collect($this->fields())->filter(fn(Field $field) => !$field instanceof Relation && $field->isSearchable());
+        return collect($this->fields())->filter(fn(Field $field) => !$field instanceof Relation && $field->isSearchable());
     }
 
     abstract public function forms();
@@ -162,9 +164,38 @@ abstract class Rookie
         return redirect()->route('rookie.index', $this::$name);
     }
 
-    abstract public function update(Request $request, $rookieName, $rookieId);
+    public function update(Request $request, $rookieId)
+    {
+        /** @var \Illuminate\Database\Eloquent\Model $model */
+        $model = static::$modelClass::findOrFail($rookieId);
 
-    abstract public function delete(Request $request, $rookieName);
+        foreach ($this->forms() as $form) {
+            /** @var \NguyenTranChung\Rookie\Form $form */
+            if (!$form->save) {
+                continue;
+            }
+
+            if (!$form->showOnUpdate) {
+                continue;
+            }
+
+            $model->setAttribute($form->name, $request->input($form->name));
+        }
+
+        $model->save();
+
+        return redirect()->route('rookie.index', $this::$name);
+    }
+
+    public function delete(Request $request, $rookieId)
+    {
+        /** @var \Illuminate\Database\Eloquent\Model $model */
+        $model = static::$modelClass::findOrFail($rookieId);
+
+        $model->delete();
+
+        return redirect()->route('rookie.index', $this::$name);
+    }
 
     /**
      * @return string
