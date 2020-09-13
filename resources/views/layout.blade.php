@@ -25,8 +25,6 @@
         integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
         integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/2.6.0/alpine.js"
-        integrity="sha512-f1s2tx564OL4dSUFbTb9EE9skCfMIYl11V3CbDoM/cQN5UcMUsAacoekIExvl89ZW5oalPL5UPKs4x71XNSq0g==" crossorigin="anonymous"></script>
 
 <script type="text/javascript">
     // waiting for DOM loaded
