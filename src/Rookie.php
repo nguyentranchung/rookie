@@ -179,6 +179,11 @@ abstract class Rookie
                 continue;
             }
 
+            if ($form->translatable) {
+                $model->setTranslation($form->name, $form->language, $request->input($form->name)[$form->language]);
+                continue;
+            }
+
             $model->setAttribute($form->name, $request->input($form->name));
         }
 
