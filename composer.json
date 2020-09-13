@@ -18,7 +18,7 @@
     "require": {
         "php": "^7.1",
         "illuminate/support": "^7.0 || ^8.0",
-        "livewire/livewire": "^2.0",
+        "livewire/livewire": "^2.1",
         "protonemedia/laravel-form-components": "^2.0",
         "spatie/laravel-collection-macros": "^7.0"
     },
