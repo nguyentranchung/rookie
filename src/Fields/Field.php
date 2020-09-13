@@ -52,7 +52,7 @@ class Field
     /**
      * @param  mixed  $header
      *
-     * @return \NguyenTranChung\Rookie\Fields\Field | \NguyenTranChung\Rookie\Fields\Relation
+     * @return \NguyenTranChung\Rookie\Fields\Field|\NguyenTranChung\Rookie\Fields\Relation
      */
     public function setHeader($header)
     {
@@ -86,7 +86,7 @@ class Field
     }
 
     /**
-     * @param  null  $search
+     * @param  AllowedFilter|string|null  $search
      *
      * @return \NguyenTranChung\Rookie\Fields\Field
      */
@@ -126,7 +126,7 @@ class Field
     }
 
     /**
-     * @param  callable | string  $value
+     * @param  callable|string  $value
      *
      * @return \NguyenTranChung\Rookie\Fields\Field
      */
