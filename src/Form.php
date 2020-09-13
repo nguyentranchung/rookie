@@ -19,6 +19,7 @@ abstract class Form
     public bool $save = true;
     public bool $showOnCreation = true;
     public bool $showOnUpdate = true;
+    public $translatable = false;
 
     public $value;
     public $default;
@@ -97,14 +98,6 @@ abstract class Form
         return $this;
     }
 
-
-    public function language($language)
-    {
-        $this->language = $language;
-
-        return $this;
-    }
-
     public function positionRight()
     {
         $this->position = 'right';
@@ -127,5 +120,18 @@ abstract class Form
     public function isPositionLeft()
     {
         return $this->position === 'left';
+    }
+
+    public function isTranslatable()
+    {
+        return $this->translatable;
+    }
+
+    public function translatable()
+    {
+        $this->translatable = true;
+        $this->language = request()->query('model-language', App::getLocale());
+
+        return $this;
     }
 }
