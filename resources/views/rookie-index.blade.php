@@ -64,11 +64,11 @@
                             <td>
                                 @if($field->isSearchable())
                                     <div class="btn-group w-100">
-                                        <input id="{{ 'search-'.$field->getAttribute() }}" class="form-control"
-                                               wire:model.debounce.500ms="search.{{ $field->getSearchKey() }}" type="text">
+                                        <input id="{{ 'filter-'.$field->getAttribute() }}" class="form-control"
+                                               wire:model.debounce.500ms="filter.{{ $field->getSearchKey() }}" type="text">
                                         @if(isset($this->filter) && Arr::has($this->filter, $field->getSearchKey()) && filled($this->filter[$field->getSearchKey()]))
-                                            <div wire:model="search.{{ $field->getSearchKey() }}">
-                                                <span id="input-clear" class="far fa-times-circle" x-data @click="$dispatch('input', null)"></span>
+                                            <div wire:model="filter.{{ $field->getSearchKey() }}">
+                                                <span id="input-clear" class="far fa-times-circle" wire:click="clearSearch('{{ $field->getSearchKey() }}')"></span>
                                             </div>
                                         @endif
                                     </div>

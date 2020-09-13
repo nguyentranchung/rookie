@@ -3,7 +3,7 @@
 
 namespace NguyenTranChung\Rookie;
 
-
+use Illuminate\Support\Arr;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -12,25 +12,30 @@ class RookieIndex extends Component
     use WithPagination;
 
     protected $paginationTheme = 'bootstrap';
-    public string $name;
-    public $search;
+    public $name;
+    public $filter;
 
-    protected $queryString = ['search'];
+    protected $queryString = ['filter'];
 
     public function mount($name)
     {
-        $this->search = request()->query('search', $this->search);
+        $this->filter = request()->query('filter', $this->filter);
         $this->name = $name;
     }
 
-    public function updatingSearch()
+    public function updatingFilter()
     {
-        $this->page = 1;
+        $this->resetPage();
+    }
+
+    public function clearSearch($searchKey)
+    {
+        Arr::set($this->filter, $searchKey, '');
     }
 
     public function render()
     {
-        request()->query->set('filter', $this->search);
+        request()->query->set('filter', $this->filter);
 
         return view('rookie::rookie-index', ['rookie' => Rookie::findOrFail($this->name)]);
     }
