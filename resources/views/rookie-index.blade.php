@@ -9,6 +9,8 @@
 // $rookie = $this->rookie;
 ?>
 <div class="card">
+    @include('rookie::style')
+
     <div class="card-header">
         <div class="row">
             <div class="col-6">
